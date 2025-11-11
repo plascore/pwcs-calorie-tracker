@@ -1,5 +1,11 @@
 const menuContainer = document.getElementById('menu-container');
 const dateInput = document.getElementById('date');
+const selectedItemsContainer = document.getElementById('selected-items');
+const totalCaloriesValue = document.getElementById('total-calories-value');
+const clearBtn = document.getElementById('clear-selection');
+
+// Store selected items (array of {id, name, calories, allergens})
+let selectedItems = [];
 
 // Default to today
 const today = new Date().toISOString().split('T')[0];
@@ -82,12 +88,32 @@ async function loadMenu(dateIso) {
       const prod = item.product;
       const div = document.createElement('div');
       div.className = 'menu-item';
+      const calories = prod.prod_calories || 0;
+      const isSelected = selectedItems.some(sel => sel.id === prod.id);
+      
       div.innerHTML = `
         <h3>${prod.name}</h3>
-        <p>Calories: ${prod.prod_calories || 'N/A'}</p>
+        <p>Calories: ${calories || 'N/A'}</p>
         <p>Allergens: ${prod.prod_allergens || 'None'}</p>
+        <button class="add-btn" data-item-id="${prod.id}" data-item-name="${prod.name}" data-item-calories="${calories}" data-item-allergens="${prod.prod_allergens || 'None'}" ${isSelected ? 'disabled' : ''}>
+          ${isSelected ? 'Added' : 'Add to Counter'}
+        </button>
       `;
       menuContainer.appendChild(div);
+    });
+
+    // Add event listeners to all add buttons
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = e.target.getAttribute('data-item-id');
+        const name = e.target.getAttribute('data-item-name');
+        const calories = parseInt(e.target.getAttribute('data-item-calories')) || 0;
+        const allergens = e.target.getAttribute('data-item-allergens');
+        
+        addToCounter({ id, name, calories, allergens });
+        e.target.disabled = true;
+        e.target.textContent = 'Added';
+      });
     });
 
   } catch (err) {
@@ -99,7 +125,79 @@ async function loadMenu(dateIso) {
 // Initial load
 loadMenu(today);
 
+// Add item to counter
+function addToCounter(item) {
+  selectedItems.push(item);
+  updateCounterDisplay();
+}
+
+// Remove item from counter
+function removeFromCounter(itemId) {
+  selectedItems = selectedItems.filter(item => item.id !== itemId);
+  updateCounterDisplay();
+  
+  // Re-enable the add button for this item
+  const addBtn = document.querySelector(`.add-btn[data-item-id="${itemId}"]`);
+  if (addBtn) {
+    addBtn.disabled = false;
+    addBtn.textContent = 'Add to Counter';
+  }
+}
+
+// Update counter display
+function updateCounterDisplay() {
+  // Clear current display
+  selectedItemsContainer.innerHTML = '';
+  
+  if (selectedItems.length === 0) {
+    selectedItemsContainer.innerHTML = '<p class="empty-selection">No items selected yet. Add items from the menu above.</p>';
+    totalCaloriesValue.textContent = '0';
+    return;
+  }
+  
+  // Display selected items
+  selectedItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'selected-item';
+    div.innerHTML = `
+      <div class="selected-item-info">
+        <div class="selected-item-name">${item.name}</div>
+        <div class="selected-item-calories">${item.calories || 0} calories</div>
+      </div>
+      <button class="remove-btn" data-item-id="${item.id}">Remove</button>
+    `;
+    selectedItemsContainer.appendChild(div);
+  });
+  
+  // Add event listeners to remove buttons
+  document.querySelectorAll('.remove-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const itemId = e.target.getAttribute('data-item-id');
+      removeFromCounter(itemId);
+    });
+  });
+  
+  // Calculate and display total calories
+  const total = selectedItems.reduce((sum, item) => sum + (parseInt(item.calories) || 0), 0);
+  totalCaloriesValue.textContent = total;
+}
+
+// Clear all selected items
+clearBtn.addEventListener('click', () => {
+  selectedItems = [];
+  updateCounterDisplay();
+  
+  // Re-enable all add buttons
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.disabled = false;
+    btn.textContent = 'Add to Counter';
+  });
+});
+
 // Update menu on date change
 dateInput.addEventListener('change', e => {
   loadMenu(e.target.value);
 });
+
+// Initialize counter display
+updateCounterDisplay();
