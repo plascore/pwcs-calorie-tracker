@@ -27,6 +27,29 @@ h1 {
     font-weight: 700;
 }
 
+.credit-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+}
+
+.credit-footer p {
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+h4 {
+    text-align: center;
+    color: #000000;
+    margin-bottom: 0rem;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
 .date-selector {
     margin-bottom: 2rem;
     text-align: center;
@@ -461,6 +484,12 @@ h1 {
         font-size: 0.95rem;
         width: 100%;
         max-width: 300px;
+    }
+
+    .credit-footer {
+        margin-top: 1.5rem;
+        padding: 0.75rem 0;
+        font-size: 0.8rem;
     }
 
     .menu-grid {
