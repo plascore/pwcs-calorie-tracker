@@ -15,10 +15,25 @@
             <input type="date" id="date">
         </div>
 
+        <!-- Mobile sticky counter summary -->
+        <div id="mobile-counter-summary" class="mobile-counter-summary">
+            <div class="mobile-summary-content">
+                <div class="mobile-total">
+                    <span class="mobile-label">Total:</span>
+                    <span id="mobile-total-calories" class="mobile-calories-value">0</span>
+                    <span class="mobile-calories-unit">cal</span>
+                </div>
+                <button id="toggle-counter" class="toggle-counter-btn">
+                    <span id="toggle-counter-text">View</span>
+                    <span class="toggle-icon">▼</span>
+                </button>
+            </div>
+        </div>
+
         <div class="main-content">
             <div class="menu-section">
                 <h2>Menu Items</h2>
-                <div id="menu-container"></div>
+                <div id="menu-container" class="menu-grid"></div>
             </div>
 
             <div id="counter-section" class="counter-section">

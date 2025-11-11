@@ -2,7 +2,12 @@ const menuContainer = document.getElementById('menu-container');
 const dateInput = document.getElementById('date');
 const selectedItemsContainer = document.getElementById('selected-items');
 const totalCaloriesValue = document.getElementById('total-calories-value');
+const mobileTotalCalories = document.getElementById('mobile-total-calories');
 const clearBtn = document.getElementById('clear-selection');
+const counterSection = document.getElementById('counter-section');
+const toggleCounterBtn = document.getElementById('toggle-counter');
+const toggleCounterText = document.getElementById('toggle-counter-text');
+const toggleIcon = document.querySelector('.toggle-icon');
 
 // Store selected items (array of {id, name, calories, allergens})
 let selectedItems = [];
@@ -151,6 +156,7 @@ function updateCounterDisplay() {
   if (selectedItems.length === 0) {
     selectedItemsContainer.innerHTML = '<p class="empty-selection">No items selected yet.<br>Add items from the menu.</p>';
     totalCaloriesValue.textContent = '0';
+    mobileTotalCalories.textContent = '0';
     return;
   }
   
@@ -179,6 +185,7 @@ function updateCounterDisplay() {
   // Calculate and display total calories
   const total = selectedItems.reduce((sum, item) => sum + (parseInt(item.calories) || 0), 0);
   totalCaloriesValue.textContent = total;
+  mobileTotalCalories.textContent = total;
 }
 
 // Clear all selected items
@@ -196,6 +203,14 @@ clearBtn.addEventListener('click', () => {
 // Update menu on date change
 dateInput.addEventListener('change', e => {
   loadMenu(e.target.value);
+});
+
+// Toggle counter section on mobile
+toggleCounterBtn.addEventListener('click', () => {
+  counterSection.classList.toggle('mobile-visible');
+  const isVisible = counterSection.classList.contains('mobile-visible');
+  toggleCounterText.textContent = isVisible ? 'Hide' : 'View';
+  toggleIcon.classList.toggle('rotated', isVisible);
 });
 
 // Initialize counter display

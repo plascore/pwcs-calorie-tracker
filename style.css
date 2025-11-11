@@ -84,6 +84,10 @@ h1 {
     margin-top: 0;
 }
 
+.menu-grid {
+    display: block;
+}
+
 .menu-item {
     background: #f8fafc;
     border: 2px solid #e2e8f0;
@@ -91,6 +95,9 @@ h1 {
     padding: 1.25rem;
     margin-bottom: 1rem;
     transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .menu-item:hover {
@@ -104,6 +111,8 @@ h1 {
     color: #1e293b;
     font-size: 1.2rem;
     font-weight: 600;
+    line-height: 1.3;
+    flex: 1;
 }
 
 .menu-item p {
@@ -229,6 +238,8 @@ h1 {
     margin-top: 0.75rem;
     transition: all 0.2s;
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    min-height: 44px;
+    touch-action: manipulation;
 }
 
 .add-btn:hover {
@@ -297,6 +308,79 @@ h1 {
     font-size: 0.95rem;
 }
 
+/* Mobile counter summary bar */
+.mobile-counter-summary {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.mobile-summary-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mobile-total {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    color: white;
+}
+
+.mobile-label {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.mobile-calories-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+}
+
+.mobile-calories-unit {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.toggle-counter-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    min-height: 44px;
+    touch-action: manipulation;
+}
+
+.toggle-counter-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.toggle-icon {
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+}
+
+.toggle-icon.rotated {
+    transform: rotate(180deg);
+}
+
 /* Responsive design */
 @media (max-width: 968px) {
     .main-content {
@@ -314,6 +398,54 @@ h1 {
     }
 }
 
+@media (max-width: 768px) {
+    .mobile-counter-summary {
+        display: block;
+    }
+
+    .counter-section {
+        display: none;
+        margin-top: 1rem;
+    }
+
+    .counter-section.mobile-visible {
+        display: block;
+    }
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .menu-item {
+        padding: 1rem;
+        margin-bottom: 0;
+    }
+
+    .menu-item h3 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .menu-item .calories-display {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .add-btn {
+        padding: 0.65rem 1rem;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        width: 100%;
+    }
+
+    .menu-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+    }
+}
+
 @media (max-width: 640px) {
     body {
         padding: 0.5rem;
@@ -326,9 +458,120 @@ h1 {
 
     h1 {
         font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .date-selector {
+        margin-bottom: 1rem;
+    }
+
+    .date-selector label {
+        font-size: 1rem;
+    }
+
+    .date-selector input[type="date"] {
+        padding: 0.65rem 0.9rem;
+        font-size: 0.95rem;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .mobile-counter-summary {
+        padding: 0.875rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .mobile-calories-value {
+        font-size: 1.6rem;
+    }
+
+    .menu-grid {
+        gap: 0.6rem;
     }
 
     .menu-item {
+        padding: 0.875rem;
+    }
+
+    .menu-item h3 {
+        font-size: 0.95rem;
+    }
+
+    .menu-item .calories-display {
+        font-size: 0.9rem;
+    }
+
+    .add-btn {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.85rem;
+    }
+
+    .counter-section {
+        padding: 1.25rem;
+    }
+
+    .counter-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .selected-item {
+        padding: 0.875rem;
+        margin: 0.5rem 0;
+    }
+
+    .selected-item-name {
+        font-size: 0.9rem;
+    }
+
+    .selected-item-calories {
+        font-size: 0.8rem;
+    }
+
+    .remove-btn {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.8rem;
+        min-height: 36px;
+    }
+
+    .total-calories {
         padding: 1rem;
+        margin: 1.25rem 0;
+    }
+
+    .total-calories strong {
+        font-size: 1rem;
+    }
+
+    #total-calories-value {
+        font-size: 1.5rem;
+    }
+
+    .clear-btn {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .mobile-summary-content {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+
+    .mobile-total {
+        justify-content: center;
+    }
+
+    .toggle-counter-btn {
+        width: 100%;
+        justify-content: center;
     }
 }
