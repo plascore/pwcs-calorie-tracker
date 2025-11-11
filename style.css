@@ -308,78 +308,6 @@ h1 {
     font-size: 0.95rem;
 }
 
-/* Mobile counter summary bar */
-.mobile-counter-summary {
-    display: none;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    border-radius: 12px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-}
-
-.mobile-summary-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.mobile-total {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    color: white;
-}
-
-.mobile-label {
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.mobile-calories-value {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: white;
-}
-
-.mobile-calories-unit {
-    font-size: 1rem;
-    opacity: 0.9;
-}
-
-.toggle-counter-btn {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.2s;
-    min-height: 44px;
-    touch-action: manipulation;
-}
-
-.toggle-counter-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.toggle-icon {
-    font-size: 0.8rem;
-    transition: transform 0.3s;
-}
-
-.toggle-icon.rotated {
-    transform: rotate(180deg);
-}
 
 /* Responsive design */
 @media (max-width: 968px) {
@@ -399,28 +327,30 @@ h1 {
 }
 
 @media (max-width: 768px) {
-    .mobile-counter-summary {
-        display: block;
+    .main-content {
+        flex-direction: column;
     }
 
     .counter-section {
-        display: none;
-        margin-top: 1rem;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        margin-bottom: 1.5rem;
+        order: -1;
     }
 
-    .counter-section.mobile-visible {
-        display: block;
+    .menu-section {
+        order: 1;
     }
 
     .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
+        display: block;
     }
 
     .menu-item {
         padding: 1rem;
-        margin-bottom: 0;
+        margin-bottom: 1rem;
     }
 
     .menu-item h3 {
@@ -474,19 +404,6 @@ h1 {
         font-size: 0.95rem;
         width: 100%;
         max-width: 300px;
-    }
-
-    .mobile-counter-summary {
-        padding: 0.875rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .mobile-calories-value {
-        font-size: 1.6rem;
-    }
-
-    .menu-grid {
-        gap: 0.6rem;
     }
 
     .menu-item {
@@ -554,24 +471,3 @@ h1 {
     }
 }
 
-@media (max-width: 480px) {
-    .menu-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-    }
-
-    .mobile-summary-content {
-        flex-direction: column;
-        gap: 0.75rem;
-        align-items: stretch;
-    }
-
-    .mobile-total {
-        justify-content: center;
-    }
-
-    .toggle-counter-btn {
-        width: 100%;
-        justify-content: center;
-    }
-}
