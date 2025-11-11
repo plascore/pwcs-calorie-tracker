@@ -10,18 +10,25 @@
     <div class="container">
         <h1>PWCS Lunch Menu</h1>
 
-        <label for="date">Select a day:</label>
-        <input type="date" id="date">
+        <div class="date-selector">
+            <label for="date">Select a day:</label>
+            <input type="date" id="date">
+        </div>
 
-        <div id="menu-container"></div>
-
-        <div id="counter-section" class="counter-section">
-            <h2>Your Selection</h2>
-            <div id="selected-items"></div>
-            <div id="total-calories" class="total-calories">
-                <strong>Total Calories: <span id="total-calories-value">0</span></strong>
+        <div class="main-content">
+            <div class="menu-section">
+                <h2>Menu Items</h2>
+                <div id="menu-container"></div>
             </div>
-            <button id="clear-selection" class="clear-btn">Clear All</button>
+
+            <div id="counter-section" class="counter-section">
+                <h2>Your Selection</h2>
+                <div id="selected-items"></div>
+                <div id="total-calories" class="total-calories">
+                    <strong>Total Calories: <span id="total-calories-value">0</span></strong>
+                </div>
+                <button id="clear-selection" class="clear-btn">Clear All</button>
+            </div>
         </div>
     </div>
 

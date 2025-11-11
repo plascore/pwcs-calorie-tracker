@@ -93,8 +93,7 @@ async function loadMenu(dateIso) {
       
       div.innerHTML = `
         <h3>${prod.name}</h3>
-        <p>Calories: ${calories || 'N/A'}</p>
-        <p>Allergens: ${prod.prod_allergens || 'None'}</p>
+        <p class="calories-display">${calories || 'N/A'} calories</p>
         <button class="add-btn" data-item-id="${prod.id}" data-item-name="${prod.name}" data-item-calories="${calories}" data-item-allergens="${prod.prod_allergens || 'None'}" ${isSelected ? 'disabled' : ''}>
           ${isSelected ? 'Added' : 'Add to Counter'}
         </button>
@@ -150,7 +149,7 @@ function updateCounterDisplay() {
   selectedItemsContainer.innerHTML = '';
   
   if (selectedItems.length === 0) {
-    selectedItemsContainer.innerHTML = '<p class="empty-selection">No items selected yet. Add items from the menu above.</p>';
+    selectedItemsContainer.innerHTML = '<p class="empty-selection">No items selected yet.<br>Add items from the menu.</p>';
     totalCaloriesValue.textContent = '0';
     return;
   }
