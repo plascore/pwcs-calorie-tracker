@@ -84,11 +84,38 @@ async function loadMenu(dateIso) {
       return;
     }
 
+    // Filter out category headers and non-food items
+    const filteredItems = items.filter(item => {
+      const name = item.product.name.trim();
+      
+      // Filter out items that are category headers or instructions
+      if (
+        // Items wrapped in dashes like "-Choose 1 Protein & Grain-", "-Garden Vegetable Bar-", "-Fruit Bar-"
+        (name.startsWith('-') && name.endsWith('-')) ||
+        // Just "-Add-"
+        name === '-Add-' ||
+        // Items starting with "Choose" (category headers like "Choose 1 Milk")
+        name.startsWith('Choose') ||
+        // Items that are just instructions (case-insensitive)
+        name.toLowerCase().includes('choose 1') ||
+        name.toLowerCase().includes('choose one')
+      ) {
+        return false;
+      }
+      
+      return true;
+    });
+
+    if (filteredItems.length === 0) {
+      menuContainer.innerHTML = `<p>- No School Today -<br>- 0 cal</p>`;
+      return;
+    }
+
     // Clear container
     menuContainer.innerHTML = '';
 
     // Render items
-    items.forEach(item => {
+    filteredItems.forEach(item => {
       const prod = item.product;
       const div = document.createElement('div');
       div.className = 'menu-item';
