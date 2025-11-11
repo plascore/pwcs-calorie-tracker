@@ -1,8 +1,12 @@
 const menuContainer = document.getElementById('menu-container');
 const dateInput = document.getElementById('date');
 const selectedItemsContainer = document.getElementById('selected-items');
+const selectedItemsWrapper = document.querySelector('.selected-items-container');
 const totalCaloriesValue = document.getElementById('total-calories-value');
 const clearBtn = document.getElementById('clear-selection');
+const toggleSelectionBtn = document.getElementById('toggle-selection');
+const toggleSelectionText = document.getElementById('toggle-selection-text');
+const toggleIcon = document.querySelector('.toggle-icon');
 
 // Store selected items (array of {id, name, calories, allergens})
 let selectedItems = [];
@@ -196,6 +200,14 @@ clearBtn.addEventListener('click', () => {
 // Update menu on date change
 dateInput.addEventListener('change', e => {
   loadMenu(e.target.value);
+});
+
+// Toggle selection visibility on mobile
+toggleSelectionBtn.addEventListener('click', () => {
+  selectedItemsWrapper.classList.toggle('hidden');
+  const isHidden = selectedItemsWrapper.classList.contains('hidden');
+  toggleSelectionText.textContent = isHidden ? 'View' : 'Hide';
+  toggleIcon.classList.toggle('rotated', isHidden);
 });
 
 // Initialize counter display

@@ -144,38 +144,89 @@ h1 {
     top: 1rem;
 }
 
-.counter-section h2 {
-    margin-top: 0;
+.counter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1.5rem;
+}
+
+.counter-section h2 {
+    margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
     color: white;
     text-align: center;
+    flex: 1;
 }
 
-#selected-items {
+.mobile-only {
+    display: none;
+}
+
+.toggle-selection-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    min-height: 36px;
+    touch-action: manipulation;
+}
+
+.toggle-selection-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.toggle-icon {
+    font-size: 0.75rem;
+    transition: transform 0.3s;
+}
+
+.toggle-icon.rotated {
+    transform: rotate(180deg);
+}
+
+.selected-items-container {
     margin: 1rem 0;
     min-height: 50px;
     max-height: 400px;
     overflow-y: auto;
     padding-right: 0.5rem;
+    transition: all 0.3s ease;
 }
 
-#selected-items::-webkit-scrollbar {
+.selected-items-container.hidden {
+    display: none;
+}
+
+#selected-items {
+    margin: 0;
+}
+
+.selected-items-container::-webkit-scrollbar {
     width: 6px;
 }
 
-#selected-items::-webkit-scrollbar-track {
+.selected-items-container::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 3px;
 }
 
-#selected-items::-webkit-scrollbar-thumb {
+.selected-items-container::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 3px;
 }
 
-#selected-items::-webkit-scrollbar-thumb:hover {
+.selected-items-container::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.5);
 }
 
@@ -344,13 +395,19 @@ h1 {
         order: 1;
     }
 
+    .mobile-only {
+        display: flex;
+    }
+
     .menu-grid {
-        display: block;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
     }
 
     .menu-item {
         padding: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: 0;
     }
 
     .menu-item h3 {
@@ -404,6 +461,10 @@ h1 {
         font-size: 0.95rem;
         width: 100%;
         max-width: 300px;
+    }
+
+    .menu-grid {
+        gap: 0.6rem;
     }
 
     .menu-item {

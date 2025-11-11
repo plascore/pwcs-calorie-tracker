@@ -22,8 +22,16 @@
             </div>
 
             <div id="counter-section" class="counter-section">
-                <h2>Your Selection</h2>
-                <div id="selected-items"></div>
+                <div class="counter-header">
+                    <h2>Your Selection</h2>
+                    <button id="toggle-selection" class="toggle-selection-btn mobile-only">
+                        <span id="toggle-selection-text">Hide</span>
+                        <span class="toggle-icon">▼</span>
+                    </button>
+                </div>
+                <div class="selected-items-container">
+                    <div id="selected-items"></div>
+                </div>
                 <div id="total-calories" class="total-calories">
                     <strong>Total Calories: <span id="total-calories-value">0</span></strong>
                 </div>
