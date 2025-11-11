@@ -1,5 +1,4 @@
-// functions/menu.js
-export async function onRequest(context) {
+export async function onRequestPost(context) {
   try {
     const { request } = context;
 
@@ -11,20 +10,6 @@ export async function onRequest(context) {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'POST,GET,OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type',
-        },
-      });
-    }
-
-    // Only accept POST for GraphQL fetch; return helpful message on GET
-    if (request.method !== 'POST') {
-      return new Response(JSON.stringify({
-        ok: false,
-        message: 'This endpoint accepts POST requests with a GraphQL payload. Use POST.'
-      }), {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
         },
       });
     }
@@ -49,7 +34,7 @@ export async function onRequest(context) {
 
     const text = await upstream.text();
 
-    // Try to return JSON; if upstream returns empty/non-JSON, return raw for debugging
+    // Return JSON
     try {
       const json = JSON.parse(text);
       return new Response(JSON.stringify(json), {
@@ -62,7 +47,6 @@ export async function onRequest(context) {
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       });
     }
-
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
