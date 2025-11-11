@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>PWCS Lunch Calorie Tracker</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 40px; }
+    button { display: block; margin: 10px auto; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Today's Lunch</h1>
+  <div id="menu"></div>
+  <h3>Total Calories: <span id="total">0</span></h3>
+
+  <script>
+    async function loadMenu() {
+      const query = `
+        query GetMenu($menuTypeId: ID!, $monthId: ID!) {
+          menuType(id: $menuTypeId) {
+            items(monthId: $monthId) {
+              date
+              product { name prod_calories }
+            }
+          }
+        }
+      `;
+
+      const res = await fetch("/api/menu", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          operationName: "GetMenu",
+          variables: {
+            menuTypeId: "599742bd4d4a13a5438b4567",
+            monthId: "68890313615e6713f665ab47"
+          },
+          query
+        }),
+      });
+
+      const data = await res.json();
+      const items = data.data.menuType.items;
+
+      // format today's date like "11/11/2025"
+      const today = new Date().toLocaleDateString("en-US");
+
+      // get today's items
+      const todays = items.filter(i => i.date === today);
+      const menuDiv = document.getElementById("menu");
+      let total = 0;
+
+      todays.forEach(i => {
+        const cals = Number(i.product.prod_calories || 0);
+        const btn = document.createElement("button");
+        btn.textContent = `${i.product.name} (${cals} cal)`;
+        btn.onclick = () => {
+          total += cals;
+          document.getElementById("total").textContent = total;
+        };
+        menuDiv.appendChild(btn);
+      });
+
+      if (todays.length === 0) menuDiv.innerHTML = "<p>No menu found for today.</p>";
+    }
+
+    loadMenu();
+  </script>
+</body>
+</html>
