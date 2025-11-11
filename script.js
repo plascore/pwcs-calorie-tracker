@@ -50,8 +50,16 @@ async function loadMenu(dateIso) {
       body: JSON.stringify(payload)
     });
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const text = await response.text();
     console.log('Raw response:', text); // debug
+
+    if (!text || text.trim() === '') {
+      throw new Error('Empty response from server');
+    }
 
     const data = JSON.parse(text);
 

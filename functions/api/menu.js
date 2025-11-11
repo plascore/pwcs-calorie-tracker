@@ -1,8 +1,8 @@
-export async function onRequestPost(context) {
+export async function onRequest(context) {
   try {
     const { request } = context;
 
-    // Allow OPTIONS preflight quickly (safe CORS handling)
+    // Handle OPTIONS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         status: 204,
@@ -10,6 +10,18 @@ export async function onRequestPost(context) {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'POST,GET,OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      });
+    }
+
+    // Only allow POST for actual requests
+    if (request.method !== 'POST') {
+      return new Response(JSON.stringify({ error: 'Method not allowed. Use POST.' }), {
+        status: 405,
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Access-Control-Allow-Origin': '*',
+          'Allow': 'POST, OPTIONS'
         },
       });
     }
@@ -54,3 +66,4 @@ export async function onRequestPost(context) {
     });
   }
 }
+
